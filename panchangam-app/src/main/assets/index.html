@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Panchangam</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="saffron">
+
+<div id="app">
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <div id="header">
+    <div id="headerLeft">
+      <div id="todayDate">Loading…</div>
+      <div id="todaySamvat" class="header-sub"></div>
+      <div id="todayCity" class="header-city"></div>
+    </div>
+    <div class="header-actions">
+      <button id="shareBtn" class="icon-btn" aria-label="Share">📤</button>
+      <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙</button>
+    </div>
+  </div>
+
+  <!-- ── Content panes ─────────────────────────────────────────────────── -->
+  <div id="content">
+
+    <!-- Today -->
+    <div id="pane-today" class="tab-pane">
+
+      <!-- Sunrise / Sunset bar -->
+      <div class="sun-bar card">
+        <div class="sun-item">
+          <span class="sun-icon">🌅</span>
+          <div>
+            <div class="sun-label">Sunrise</div>
+            <div id="sunriseVal" class="sun-time">–</div>
+          </div>
+        </div>
+        <div class="sun-divider"></div>
+        <div class="sun-item">
+          <div style="text-align:right">
+            <div class="sun-label">Sunset</div>
+            <div id="sunsetVal" class="sun-time">–</div>
+          </div>
+          <span class="sun-icon">🌇</span>
+        </div>
+      </div>
+
+      <!-- Rahu Kaal + Next Vrat quick cards -->
+      <div class="quick-row">
+        <div class="quick-card card">
+          <div class="quick-label">⛔ Rahu Kaal</div>
+          <div id="rahuQuickTime" class="quick-val">–</div>
+        </div>
+        <div class="quick-card card">
+          <div class="quick-label">🙏 Next Vrat</div>
+          <div id="nextVratInfo" class="quick-val">–</div>
+        </div>
+      </div>
+
+      <!-- Panchak warning (shown only when active) -->
+      <div id="panchakBanner" class="panchak-banner hidden">⚠️ Panchak active — Moon in Dhanishtha–Revati. Avoid new ventures &amp; south-facing travel.</div>
+
+      <!-- Pancha Anga table -->
+      <div class="section-title">पंच अंग · Pancha Anga</div>
+      <div class="anga-table card">
+
+        <div class="anga-row anga-tappable" data-type="tithi">
+          <div class="anga-left">
+            <div class="anga-sanskrit">तिथि</div>
+            <div class="anga-label">Tithi</div>
+          </div>
+          <div class="anga-right">
+            <div id="tithiName" class="anga-val">–</div>
+            <div id="tithiNum" class="anga-sub"></div>
+            <div id="tithiEnd" class="anga-end"></div>
+          </div>
+          <span class="anga-info-icon">ⓘ</span>
+        </div>
+
+        <div class="anga-divider"></div>
+
+        <div class="anga-row anga-tappable" data-type="vara">
+          <div class="anga-left">
+            <div class="anga-sanskrit">वार</div>
+            <div class="anga-label">Vara</div>
+          </div>
+          <div class="anga-right">
+            <div id="varaName" class="anga-val">–</div>
+          </div>
+          <span class="anga-info-icon">ⓘ</span>
+        </div>
+
+        <div class="anga-divider"></div>
+
+        <div class="anga-row anga-tappable" data-type="nakshatra">
+          <div class="anga-left">
+            <div class="anga-sanskrit">नक्षत्र</div>
+            <div class="anga-label">Nakshatra</div>
+          </div>
+          <div class="anga-right">
+            <div id="nakshatraName" class="anga-val">–</div>
+            <div id="nakshatraEnd" class="anga-end"></div>
+          </div>
+          <span class="anga-info-icon">ⓘ</span>
+        </div>
+
+        <div class="anga-divider"></div>
+
+        <div class="anga-row anga-tappable" data-type="yoga">
+          <div class="anga-left">
+            <div class="anga-sanskrit">योग</div>
+            <div class="anga-label">Yoga</div>
+          </div>
+          <div class="anga-right">
+            <div id="yogaName" class="anga-val">–</div>
+          </div>
+          <span class="anga-info-icon">ⓘ</span>
+        </div>
+
+        <div class="anga-divider"></div>
+
+        <div class="anga-row anga-tappable" data-type="karana">
+          <div class="anga-left">
+            <div class="anga-sanskrit">करण</div>
+            <div class="anga-label">Karana</div>
+          </div>
+          <div class="anga-right">
+            <div id="karanaName" class="anga-val">–</div>
+          </div>
+          <span class="anga-info-icon">ⓘ</span>
+        </div>
+
+        <div class="anga-divider"></div>
+
+        <div class="anga-row anga-tappable" data-type="rashi">
+          <div class="anga-left">
+            <div class="anga-sanskrit">राशि</div>
+            <div class="anga-label">Surya Rashi</div>
+          </div>
+          <div class="anga-right">
+            <div id="rashiName" class="anga-val">–</div>
+          </div>
+          <span class="anga-info-icon">ⓘ</span>
+        </div>
+
+      </div><!-- /anga-table -->
+    </div><!-- /pane-today -->
+
+    <!-- Timings -->
+    <div id="pane-timings" class="tab-pane hidden">
+      <div class="section-title">⛔ अशुभ काल · Inauspicious Times</div>
+      <div class="timing-card card">
+        <div class="timing-row" id="rahuRow">
+          <div class="timing-left">
+            <div class="timing-dot rahu-dot"></div>
+            <div>
+              <div class="timing-name">Rahu Kalam</div>
+              <div class="timing-sub">राहु काल</div>
+            </div>
+          </div>
+          <div id="rahuVal" class="timing-val">–</div>
+        </div>
+        <div class="timing-row" id="yamaRow">
+          <div class="timing-left">
+            <div class="timing-dot yama-dot"></div>
+            <div>
+              <div class="timing-name">Yamagandam</div>
+              <div class="timing-sub">यमगण्डम्</div>
+            </div>
+          </div>
+          <div id="yamaVal" class="timing-val">–</div>
+        </div>
+        <div class="timing-row" id="gulikaRow">
+          <div class="timing-left">
+            <div class="timing-dot gulika-dot"></div>
+            <div>
+              <div class="timing-name">Gulika Kalam</div>
+              <div class="timing-sub">गुलिक काल</div>
+            </div>
+          </div>
+          <div id="gulikaVal" class="timing-val">–</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:20px">✨ शुभ मुहूर्त · Auspicious Times</div>
+      <div class="timing-card card">
+        <div class="timing-row" id="brahmaRow">
+          <div class="timing-left">
+            <div class="timing-dot brahma-dot"></div>
+            <div>
+              <div class="timing-name">Brahma Muhurta</div>
+              <div class="timing-sub">ब्रह्म मुहूर्त</div>
+            </div>
+          </div>
+          <div id="brahmaVal" class="timing-val">–</div>
+        </div>
+        <div class="timing-row" id="abhijitRow">
+          <div class="timing-left">
+            <div class="timing-dot abhijit-dot"></div>
+            <div>
+              <div class="timing-name">Abhijit Muhurta</div>
+              <div class="timing-sub">अभिजित् मुहूर्त</div>
+            </div>
+          </div>
+          <div id="abhijitVal" class="timing-val">–</div>
+        </div>
+      </div>
+
+      <div class="timing-note card">
+        Times are computed for <span id="timingCity">–</span> based on actual sunrise/sunset.
+        Avoid Rahu Kalam for new ventures.
+      </div>
+    </div><!-- /pane-timings -->
+
+    <!-- Calendar -->
+    <div id="pane-calendar" class="tab-pane hidden">
+      <div class="cal-nav">
+        <button id="calPrev" class="cal-nav-btn">‹</button>
+        <div id="calMonthLabel" class="cal-month-label">–</div>
+        <button id="calNext" class="cal-nav-btn">›</button>
+      </div>
+      <button id="calToday" class="cal-today-btn">Today</button>
+      <div id="calGrid" class="cal-grid"></div>
+      <div class="cal-legend">
+        <span class="legend-item"><span class="shukla-dot"></span> Shukla</span>
+        <span class="legend-item"><span class="krishna-dot"></span> Krishna</span>
+        <span class="legend-item"><span class="cal-fest-dot"></span> Festival</span>
+      </div>
+    </div><!-- /pane-calendar -->
+
+    <!-- Festivals -->
+    <div id="pane-festivals" class="tab-pane hidden">
+      <div class="section-title">त्योहार · Upcoming Festivals</div>
+      <div id="festList" class="fest-list"></div>
+    </div><!-- /pane-festivals -->
+
+    <!-- Vrats -->
+    <div id="pane-vrats" class="tab-pane hidden">
+      <div class="section-title">📅 पंचक व पितृ पक्ष · Panchak &amp; Pitru Paksha</div>
+      <div id="panchakShraddhaList" class="panchak-shradh-list"></div>
+      <div class="section-title" style="margin-top:14px">व्रत · Upcoming Vrats &amp; Fasts</div>
+      <div id="vratList" class="vrat-list"></div>
+    </div><!-- /pane-vrats -->
+
+  </div><!-- /content -->
+
+  <!-- ── Bottom tab bar ─────────────────────────────────────────────────── -->
+  <div id="tabBar">
+    <button class="tab-btn active" data-tab="today">
+      <span class="tab-icon">📿</span>
+      <span class="tab-label">Today</span>
+    </button>
+    <button class="tab-btn" data-tab="timings">
+      <span class="tab-icon">⏱</span>
+      <span class="tab-label">Timings</span>
+    </button>
+    <button class="tab-btn" data-tab="calendar">
+      <span class="tab-icon">📅</span>
+      <span class="tab-label">Calendar</span>
+    </button>
+    <button class="tab-btn" data-tab="festivals">
+      <span class="tab-icon">🪔</span>
+      <span class="tab-label">Festivals</span>
+    </button>
+    <button class="tab-btn" data-tab="vrats">
+      <span class="tab-icon">🙏</span>
+      <span class="tab-label">Vrats</span>
+    </button>
+  </div>
+
+</div><!-- /app -->
+
+<!-- ── Settings panel ────────────────────────────────────────────────────── -->
+<div id="settingsOverlay" class="overlay hidden"></div>
+<div id="settingsPanel" class="panel hidden" role="dialog" aria-label="Settings">
+  <div class="panel-handle"></div>
+  <h3>Settings</h3>
+
+  <div class="setting-row">
+    <label class="setting-label">City / Location</label>
+    <select id="citySelect" class="setting-select"></select>
+  </div>
+
+  <div class="setting-row">
+    <label class="setting-label">Theme</label>
+    <div class="theme-row">
+      <button class="theme-opt active" data-theme="saffron">Saffron</button>
+      <button class="theme-opt" data-theme="dark">Dark</button>
+      <button class="theme-opt" data-theme="forest">Forest</button>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label class="setting-label">Daily Morning Notification</label>
+    <div class="notif-row">
+      <label class="toggle-wrap">
+        <input type="checkbox" id="notifToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+      <select id="notifHourSelect" class="setting-select notif-hour-select">
+        <option value="5">5:00 AM</option>
+        <option value="6">6:00 AM</option>
+        <option value="7" selected>7:00 AM</option>
+        <option value="8">8:00 AM</option>
+        <option value="9">9:00 AM</option>
+      </select>
+    </div>
+  </div>
+
+  <button id="saveSettingsBtn" class="save-btn">Apply</button>
+  <button id="cancelSettingsBtn" class="cancel-btn">Cancel</button>
+</div>
+
+<!-- ── Anga description sheet ─────────────────────────────────────────────── -->
+<div id="angaDescOverlay" class="overlay hidden"></div>
+<div id="angaDescPanel" class="panel hidden" role="dialog" aria-label="Anga description">
+  <div class="panel-handle"></div>
+  <div class="anga-desc-header">
+    <div class="anga-desc-title-wrap">
+      <div id="angaDescTitle" class="anga-desc-title"></div>
+      <div id="angaDescSubtitle" class="anga-desc-subtitle"></div>
+    </div>
+    <button id="angaDescClose" class="anga-desc-close-btn" aria-label="Close">✕</button>
+  </div>
+  <div id="angaDescBody" class="anga-desc-body"></div>
+</div>
+
+<!-- ── Day detail sheet ──────────────────────────────────────────────────── -->
+<div id="dayDetailOverlay" class="overlay hidden"></div>
+<div id="dayDetailPanel" class="panel hidden" role="dialog" aria-label="Day panchanga">
+  <div class="panel-handle"></div>
+  <div id="dayDetailDate" class="day-detail-title"></div>
+  <div id="dayDetailSamvat" class="day-detail-sub"></div>
+  <div class="day-detail-sun">
+    <span id="dayDetailSunrise" class="day-detail-sun-val">🌅 –</span>
+    <span id="dayDetailSunset" class="day-detail-sun-val">🌇 –</span>
+  </div>
+  <div id="dayDetailAngas" class="day-detail-angas"></div>
+  <div id="dayDetailFest" class="day-detail-fest hidden"></div>
+</div>
+
+<script src="astro.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

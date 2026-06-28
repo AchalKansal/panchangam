@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Panchangam</string>
+    <string name="notif_channel_name">Daily Panchanga</string>
+    <string name="notif_channel_desc">Morning notification with today\'s panchanga details</string>
+</resources>

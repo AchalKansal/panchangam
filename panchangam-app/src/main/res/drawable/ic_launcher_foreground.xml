@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Panchangam icon: sun disc with 8 rays + crescent moon — saffron theme -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Saffron background circle -->
+    <path
+        android:fillColor="#E65C00"
+        android:pathData="M0,0 L108,0 L108,108 L0,108 Z"/>
+
+    <!-- Sun rays (8 pointed star shape in gold) -->
+    <path
+        android:fillColor="#F5C842"
+        android:pathData="
+          M54,18 L57,30 L65,24 L61,35 L73,35 L64,43 L70,54 L59,51 L57,63
+          L54,52 L51,63 L49,51 L38,54 L44,43 L35,35 L47,35 L43,24 L51,30 Z"/>
+
+    <!-- Sun disc (white) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,36 A12,12 0 1,1 54,60 A12,12 0 1,1 54,36 Z"/>
+
+    <!-- Crescent moon (gold, overlapping right side of sun) -->
+    <path
+        android:fillColor="#F5C842"
+        android:pathData="
+          M61,40 A10,10 0 1,1 61,56 A7,7 0 1,0 61,40 Z"/>
+
+    <!-- Three dots below — representing Pancha Anga -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,72 A3,3 0 1,1 42,78 A3,3 0 1,1 42,72 Z"/>
+    <path
+        android:fillColor="#F5C842"
+        android:pathData="M54,72 A3,3 0 1,1 54,78 A3,3 0 1,1 54,72 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M66,72 A3,3 0 1,1 66,78 A3,3 0 1,1 66,72 Z"/>
+
+</vector>
